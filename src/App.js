@@ -40,10 +40,10 @@ function App() {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl="2" bg="orange.300" area={'header'}>
+        <GridItem pl="2" bg="green.900" area={'header'}>
           French Jocker
         </GridItem>
-        <GridItem pl="2" bg="pink.300" area={'nav'} pt="20px">
+        <GridItem pl="2" bg="green.500" area={'nav'} pt="20px">
           <VStack spacing="-65px">
             <Card w={70} color={'clubs'} num={3} />
             <Card w={70} color={'hearts'} num={2} />
@@ -69,7 +69,7 @@ function App() {
             </HStack>
           </Stack>
         </GridItem>
-        <GridItem pl="2" bg="blue.300" area={'players'} pt="20px" pb="20px">
+        <GridItem pl="2" bg="green.500" area={'players'} pt="20px" pb="20px">
           <Stack>
             <Player name="John" count={3} />
             <Player name="Peter" count={10} />
@@ -77,7 +77,7 @@ function App() {
             <Player name="Jesica" count={13} />
           </Stack>
         </GridItem>
-        <GridItem pl="2" bg="blue.300" area={'gamestack'}>
+        <GridItem pl="2" bg="greeb.500" area={'gamestack'}>
           <GameStack />
         </GridItem>
       </Grid>
