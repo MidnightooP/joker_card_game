@@ -14,10 +14,10 @@ import {
   HStack,
 } from '@chakra-ui/react';
 
-export function GameStack() {
+export function GameStack({ visible }) {
   return (
     <HStack spacing="20px" p="4">
-      <Card color={'clubs'} num={'ace'} />
+      <Card color={visible.color} num={visible.num} />
       <HStack spacing="-65px">
         <Card />
         <Card />

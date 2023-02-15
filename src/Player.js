@@ -8,8 +8,8 @@ export function Player({ count, name }) {
         <HStack spacing="-37px">
           {Array(count)
             .fill(0)
-            .map(x => (
-              <Card w={'40px'} />
+            .map((_, idx) => (
+              <Card key={idx} w={'40px'} />
             ))}
         </HStack>
         <Box>{name}</Box>

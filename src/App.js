@@ -20,11 +20,15 @@ import { Grid, GridItem } from '@chakra-ui/react';
 
 import { Card } from './Card';
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment } from './reducers/game';
+import { selectToggle, combineSelected } from './reducers/game';
 import { GameStack } from './GameStack';
 import { Player } from './Player';
 function App() {
-  const count = useSelector(state => state.game.value);
+  const player = useSelector(state => state.game.player);
+  const combinations = useSelector(state => state.game.combinations);
+  const others = useSelector(state => state.game.others);
+  const gamestack = useSelector(state => state.game.gamestack);
+
   const dispatch = useDispatch();
 
   return (
@@ -45,40 +49,44 @@ function App() {
         </GridItem>
         <GridItem pl="2" bg="green.500" area={'nav'} pt="20px">
           <VStack spacing="-65px">
-            <Card w={70} color={'clubs'} num={3} />
-            <Card w={70} color={'hearts'} num={2} />
+            {player.cards.map((card, idx) => (
+              <Card
+                key={idx}
+                color={card.color}
+                num={card.num}
+                selected={card.selected}
+                idx={idx}
+                onClick={() => dispatch(selectToggle({ idx }))}
+              />
+            ))}
           </VStack>
         </GridItem>
         <GridItem pl="2" bg="green.300" area={'main'} pt="20px">
           <Stack spacing="20px">
-            <HStack spacing="-50px">
-              <Card w={70} color={'clubs'} num={3} />
-              <Card w={70} color={'hearts'} num={2} />
-            </HStack>
-            <HStack spacing="-50px">
-              <Card w={70} color={'clubs'} num={3} />
-              <Card w={70} color={'hearts'} num={2} />
-              <Card w={70} color={'hearts'} num={2} />
-              <Card w={70} color={'hearts'} num={2} />
-            </HStack>
-            <HStack spacing="-50px">
-              <Card w={70} color={'clubs'} num={3} />
-              <Card w={70} color={'hearts'} num={2} />
-              <Card w={70} color={'hearts'} num={2} />
-              <Card w={70} color={'hearts'} num={2} />
-            </HStack>
+            {combinations.map((combo, idx) => (
+              <HStack
+                spacing="-50px"
+                key={idx}
+                onClick={() => {
+                  dispatch(combineSelected({ comboIdx: idx }));
+                }}
+              >
+                {combo.map((card, idx) => (
+                  <Card key={idx} color={card.color} num={card.num} />
+                ))}
+              </HStack>
+            ))}
           </Stack>
         </GridItem>
         <GridItem pl="2" bg="green.500" area={'players'} pt="20px" pb="20px">
           <Stack>
-            <Player name="John" count={3} />
-            <Player name="Peter" count={10} />
-            <Player name="Alice" count={13} />
-            <Player name="Jesica" count={13} />
+            {others.map((p, idx) => (
+              <Player key={idx} name={p.name} count={p.count} />
+            ))}
           </Stack>
         </GridItem>
         <GridItem pl="2" bg="greeb.500" area={'gamestack'}>
-          <GameStack />
+          <GameStack visible={gamestack.visible} />
         </GridItem>
       </Grid>
       {/* 
