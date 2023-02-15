@@ -49,7 +49,7 @@ function App() {
             <Card w={70} color={'hearts'} num={2} />
           </VStack>
         </GridItem>
-        <GridItem pl="2" bg="green.300" area={'main'} pt="20px" pl="20px">
+        <GridItem pl="2" bg="green.300" area={'main'} pt="20px">
           <Stack spacing="20px">
             <HStack spacing="-50px">
               <Card w={70} color={'clubs'} num={3} />
