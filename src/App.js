@@ -17,33 +17,10 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from '@chakra-ui/react';
-
+import { Card } from './Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from './reducers/game';
 
-function importAll(r) {
-  let images = {};
-  r.keys().map((item, index) => {
-    images[item.replace('./', '')] = r(item);
-  });
-  return images;
-}
-
-const images = importAll(
-  require.context('./cardfixed', false, /\.(png|jpe?g|svg)$/)
-);
-
-// I am a comment qweqwe
 function App() {
   const count = useSelector(state => state.game.value);
   const dispatch = useDispatch();
@@ -51,7 +28,9 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
-        <Image src={images['2_of_clubs.svg']} />
+        <Card w={70} color={'clubs'} num={3} />
+        <Card w={70} color={'hearts'} num={2} />
+
         {count}
         <Button
           onClick={() => {
