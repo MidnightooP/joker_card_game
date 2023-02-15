@@ -13,6 +13,10 @@ const images = importAll(
   require.context('./cardfixed', false, /\.(png|jpe?g|svg)$/)
 );
 
-export function Card({ w, color, num }) {
-  return <Image w={w} src={images[num + '_of_' + color + '.svg']} />;
+export function Card({ w = 70, color, num }) {
+  let img;
+  if (!num) img = images['back.svg'];
+  else img = images[num + '_of_' + color + '.svg'];
+
+  return <Image w={w} src={img} />;
 }
