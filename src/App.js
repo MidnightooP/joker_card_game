@@ -40,7 +40,7 @@ const images = importAll(
   require.context('./cardfixed', false, /\.(png|jpe?g|svg)$/)
 );
 
-// I am a comment
+// I am a comment qweqwe
 function App() {
   return (
     <ChakraProvider theme={theme}>
