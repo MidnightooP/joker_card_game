@@ -28,6 +28,9 @@ import {
   MenuDivider,
 } from '@chakra-ui/react';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment } from './reducers/game';
+
 function importAll(r) {
   let images = {};
   r.keys().map((item, index) => {
@@ -42,10 +45,28 @@ const images = importAll(
 
 // I am a comment qweqwe
 function App() {
+  const count = useSelector(state => state.game.value);
+  const dispatch = useDispatch();
+
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
         <Image src={images['2_of_clubs.svg']} />
+        {count}
+        <Button
+          onClick={() => {
+            dispatch(increment());
+          }}
+        >
+          Increment
+        </Button>
+        <Button
+          onClick={() => {
+            dispatch(decrement());
+          }}
+        >
+          Decrement
+        </Button>
       </Box>
     </ChakraProvider>
   );
