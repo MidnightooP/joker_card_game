@@ -30,6 +30,21 @@ module {
         num : Nat;
     };
 
+    public type PublicPlayer = {
+        name : Text;
+        count : Nat;
+    };
+
+    public type PlayerState = {
+        cards : [Card];
+        players : [PublicPlayer];
+
+        started : Bool;
+        combos : [[Card]]; // grupi ot kombinirani karti
+        table : [Card]; // karti na masata
+
+    };
+
     public func create_deck() : [Card] {
         let deck = Buffer.Buffer<Card>(108);
 
