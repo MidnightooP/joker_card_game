@@ -102,20 +102,21 @@ module {
                     prevelem := elem;
                 };
             } else {
+                if ((isJoker == 0) and (elem.color != #joker)) return (inp, false);
                 if (isJoker == 0) {
-                    if (elem.color != #joker) return (inp, false);
                     if (prevelem.num == 13) return (inp, false);
                     buf.put(
                         i,
                         {
                             color = prevelem.color;
-                            num = prevelem.num;
+                            num = prevelem.num + 1;
                         },
                     );
                     prevelem := buf.get(i);
                 };
-                if ((elem.num - isJoker) < 1) return (inp, false);
+
                 while (isJoker != 0) {
+                    if ((elem.num - isJoker) < 1) return (inp, false);
                     buf.put(
                         i - isJoker,
                         {
@@ -126,6 +127,7 @@ module {
 
                     isJoker -= 1;
                 };
+                prevelem := buf.get(i);
             };
 
             i += 1;
