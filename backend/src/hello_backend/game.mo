@@ -118,20 +118,21 @@ module {
                     prevelem := elem;
                 };
             } else {
+                if ((isJoker == 0) and (elem.color != #joker)) return (inp, false);
                 if (isJoker == 0) {
-                    if (elem.color != #joker) return (inp, false);
                     if (prevelem.num == 13) return (inp, false);
                     buf.put(
                         i,
                         {
                             color = prevelem.color;
-                            num = prevelem.num;
+                            num = prevelem.num + 1;
                         },
                     );
                     prevelem := buf.get(i);
                 };
-                if ((elem.num - isJoker) < 1) return (inp, false);
+
                 while (isJoker != 0) {
+                    if ((elem.num - isJoker) < 1) return (inp, false);
                     buf.put(
                         i - isJoker,
                         {
@@ -142,6 +143,7 @@ module {
 
                     isJoker -= 1;
                 };
+                prevelem := buf.get(i);
             };
 
             i += 1;
@@ -151,21 +153,18 @@ module {
     };
 
     public func score(inp : [Card]) : Nat {
-        var sum = 0;
-        var prevnum = 1;
-        for (element in inp.vals()) {
-            sum += 12; //element
-            let mynum = switch (element.color) {
-                case (#joker) prevnum + 1;
-                case (_) element.num;
-            };
-
-            if (mynum <= 10) { sum += mynum } else if (mynum <= 12) {
-                sum += 1;
-            } else if (mynum <= 12) { sum += 1 };
-
-            prevnum := mynum;
+        var sum : Nat = 0;
+        let buf = Buffer.fromArray<Card>(inp);
+        let nbCards = buf.size();
+        if (nbCards == 0) return 0;
+        var card : Card = buf.get(0);
+        var i : Nat = 0;
+        while (i < nbCards) {
+            card := buf.get(i);
+            if (card.num <= 10) { sum += card.num };
+            if (card.num <= 13) { sum += 10 };
+            i += 0;
         };
-        sum;
+        return (sum);
     };
 };
