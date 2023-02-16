@@ -19,6 +19,7 @@ actor {
       var combos = [];
       var players = [];
       var started = false;
+      var playerTurn = 0;
     };
     games.add(game);
     lastGame += 1;
@@ -52,6 +53,26 @@ actor {
     game.started := true;
   };
 
+  public func take_card(gameIdx : Nat, playerIdx : Nat) : () {
+    let game = games.get(gameIdx);
+    let (drawn, after) = Game.draw(game.deck, 1);
+    game.deck := after;
+    game.players[playerIdx].cards := Array.append(game.players[playerIdx].cards, drawn);
+
+  };
+
+  public func play_combo(gameIdx : Nat, playerIdx : Nat, groupIdx : ?Nat, cards : [Card], where : { #prefix; #suffix }) : async Bool {
+    switch (groupIdx) {
+      case (null) {
+        // new group
+      };
+      case (?idx) {
+        // group already exists
+      };
+    };
+    true;
+  };
+
   public query func ping(gameIdx : Nat, playerIdx : Nat) : async Game.PlayerState {
     let game = games.get(gameIdx);
     let player = game.players.get(playerIdx);
@@ -61,6 +82,7 @@ actor {
       combos = game.combos;
       started = game.started;
       visible = game.deck[0];
+      playerTurn = game.playerTurn;
       players = Array.mapEntries<Game.Player, Game.PublicPlayer>(
         game.players,
         func((x, idx)) {

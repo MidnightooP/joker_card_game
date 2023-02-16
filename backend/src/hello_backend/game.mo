@@ -15,6 +15,7 @@ module {
         var started : Bool;
         var combos : [[Card]]; // grupi ot kombinirani karti
         var table : [Card]; // karti na masata
+        var playerTurn : Nat;
     };
 
     public type Color = {
@@ -42,7 +43,7 @@ module {
         started : Bool;
         combos : [[Card]]; // grupi ot kombinirani karti
         table : [Card]; // karti na masata
-
+        playerTurn : Nat;
     };
 
     public func create_deck() : [Card] {
