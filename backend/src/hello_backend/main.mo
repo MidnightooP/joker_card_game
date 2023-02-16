@@ -62,12 +62,57 @@ actor {
   };
 
   public func play_combo(gameIdx : Nat, playerIdx : Nat, groupIdx : ?Nat, cards : [Card], where : { #prefix; #suffix }) : async Bool {
-    switch (groupIdx) {
+    let game = games.get(gameIdx);
+
+    let combo = switch (groupIdx) {
       case (null) {
         // new group
+        [];
       };
       case (?idx) {
         // group already exists
+        game.combos[idx];
+      };
+    };
+
+    let combo_added = switch (where) {
+      case (#prefix) Array.append(cards, combo);
+      case (#suffix) Array.append(combo, cards);
+    };
+
+    let (cards_for_score, ok) = Game.verification(combo_added);
+    if (ok == false) return false;
+    // remove cards from player
+    let buf = Buffer.fromArray<Card>(cards); // make it a buffer because we need indexOf
+    game.players[playerIdx].cards := Array.filter(
+      game.players[playerIdx].cards,
+      func(pcard : Card) : Bool {
+        switch (
+          Buffer.indexOf<Card>(
+            pcard,
+            buf,
+            func(a, b) {
+              a.num == b.num and a.color == b.color
+            },
+          ),
+        ) {
+          case (null) true;
+          case (?idx) false;
+        };
+      },
+    );
+
+    // add cards to group
+    switch (groupIdx) {
+      case (null) {
+        // new group
+        game.combos := Array.append(game.combos, [combo_added]);
+      };
+      case (?idx) {
+        // group already exists (replace)
+        let bf = Buffer.fromArray<[Card]>(game.combos);
+        bf.put(idx, combo_added);
+        game.combos := Buffer.toArray(bf);
       };
     };
     true;
