@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
+    "@dfinity/authentication": "^0.14.2",
+    "@dfinity/candid": "^0.14.1",
+    "@dfinity/identity": "^0.14.1",
+    "@dfinity/principal": "^0.14.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@reduxjs/toolkit": "^1.9.2",
@@ -27,6 +31,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy":"http://localhost:4943/",
   "browserslist": {
     "production": [
       ">0.2%",

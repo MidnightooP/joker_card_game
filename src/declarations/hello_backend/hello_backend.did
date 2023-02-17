@@ -1,0 +1,45 @@
+type PublicPlayer = 
+ record {
+   count: nat;
+   name: text;
+ };
+type PlayerState = 
+ record {
+   cards: vec Card__1;
+   combos: vec vec Card__1;
+   playerTurn: nat;
+   players: vec PublicPlayer;
+   started: bool;
+   table: vec Card__1;
+ };
+type Color = 
+ variant {
+   clubs;
+   diamonds;
+   hearts;
+   joker;
+   spades;
+ };
+type Card__1 = 
+ record {
+   color: Color;
+   num: nat;
+ };
+type Card = 
+ record {
+   color: Color;
+   num: nat;
+ };
+service : {
+  join: (nat, text) -> (nat);
+  new: () -> (nat);
+  ping: (nat, nat) -> (PlayerState) query;
+  play_combo: (nat, nat, opt nat, vec Card, variant {
+                                              prefix;
+                                              suffix;
+                                            }) -> (bool);
+  score: () -> (vec Card, nat);
+  start: (nat) -> ();
+  take_card: (nat, nat) -> () oneway;
+  verification: (vec Card) -> (vec Card, bool) query;
+}

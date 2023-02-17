@@ -23,6 +23,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectToggle, combineSelected } from './reducers/game';
 import { GameStack } from './GameStack';
 import { Player } from './Player';
+
+import { new_game, join_game, start_game, play_combo } from './reducers/game';
 function App() {
   const player = useSelector(state => state.game.player);
   const combinations = useSelector(state => state.game.combinations);
@@ -45,7 +47,42 @@ function App() {
         fontWeight="bold"
       >
         <GridItem pl="2" bg="green.900" area={'header'}>
-          French Jocker
+          <HStack mt="1">
+            <Box color="pink.200"> Jocker</Box>
+            <Button
+              onClick={() => {
+                let name = prompt('Please enter your name');
+
+                dispatch(new_game(name));
+              }}
+            >
+              New Game
+            </Button>
+            <Button
+              onClick={() => {
+                let game_id = Number(prompt('Please enter your game id'));
+                let name = prompt('Please enter your name');
+
+                dispatch(join_game(game_id, name));
+              }}
+            >
+              Join Game
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(start_game());
+              }}
+            >
+              Start Game
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(play_combo());
+              }}
+            >
+              Play Combo
+            </Button>
+          </HStack>
         </GridItem>
         <GridItem pl="2" bg="green.500" area={'nav'} pt="20px">
           <VStack spacing="-65px">

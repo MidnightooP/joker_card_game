@@ -15,8 +15,17 @@ const images = importAll(
 
 export function Card({ w = 70, selected, color, num, onClick, idx }) {
   let img;
+
+  if (num === '1') num = 'ace';
+  else if (num === '11') num = 'jack';
+  else if (num === '12') num = 'queen';
+  else if (num === '13') num = 'king';
+
   if (!num) img = images['back.svg'];
-  else img = images[num + '_of_' + color + '.svg'];
+  else {
+    if (num === '0') img = images['jocker.svg'];
+    else img = images[num + '_of_' + color + '.svg'];
+  }
 
   return (
     <Image
